@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Gestor de Contactos WhatsApp{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  {% if sesion %}
+  <nav class="nav">
+    <span class="marca">📱 Gestor WhatsApp</span>
+    <a href="/">Panel</a>
+    <a href="/contactos">Contactos</a>
+    <a href="/importar">Importar CSV</a>
+    <a href="/mensajes">Mensajes</a>
+    <a href="/configuracion">Configuración</a>
+    <a href="/logout" style="margin-left:auto">Salir</a>
+  </nav>
+  {% endif %}
+  <div class="contenedor">
+    {% block contenido %}{% endblock %}
+  </div>
+</body>
+</html>

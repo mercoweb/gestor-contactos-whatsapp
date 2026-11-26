@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Importar contactos desde CSV</h1>
+<div class="tarjeta">
+  {% if resultado %}
+  <div class="msg-ok">
+    Importación de <strong>{{ resultado.archivo }}</strong> completada:
+    {{ resultado.creados }} nuevos, {{ resultado.actualizados }} actualizados, {{ resultado.errores }} filas ignoradas sin teléfono.
+  </div>
+  {% endif %}
+  <form method="post" action="/importar" enctype="multipart/form-data">
+    <div class="campo">
+      <label>Archivo CSV (exportado de Excel o de tu gestor de contactos)</label>
+      <input type="file" name="archivo" accept=".csv,text/csv" required>
+    </div>
+    <button class="btn" type="submit">Importar</button>
+  </form>
+</div>
+<div class="tarjeta">
+  <h2>Formato esperado</h2>
+  <p class="ayuda">La primera fila debe ser el encabezado. Columnas reconocidas (no todas obligatorias):</p>
+  <table>
+    <tr><th>nombre</th><th>telefono</th><th>email</th><th>ciudad</th><th>grupo</th><th>fecha_ingreso</th></tr>
+    <tr><td>Juan Pérez</td><td>5491122334455</td><td>juan@mail.com</td><td>Bogotá</td><td>Grupo Principal</td><td>2025-01-15</td></tr>
+  </table>
+  <p class="ayuda">El teléfono debe incluir el código de país, sin "+" ni espacios (ej: 5491122334455). Los contactos existentes se actualizan, no se duplican.</p>
+</div>
+{% endblock %}

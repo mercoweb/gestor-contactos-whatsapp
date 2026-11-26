@@ -1,0 +1,15 @@
+{
+  "name": "wa-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bot de WhatsApp: detecta nuevos miembros del grupo y envía bienvenidas con límites anti-bloqueo",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "^1.26.0",
+    "qrcode-terminal": "^0.12.0",
+    "dotenv": "^16.4.5"
+  }
+}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>{{ 'Editar contacto' if c else 'Nuevo contacto' }}</h1>
+<div class="tarjeta">
+  <form method="post" action="{{ '/contactos/' ~ c['id'] if c else '/contactos/nuevo' }}">
+    <div class="fila-form">
+      <div class="campo">
+        <label>Nombre completo</label>
+        <input type="text" name="nombre" value="{{ c['nombre'] if c else '' }}">
+      </div>
+      <div class="campo">
+        <label>Teléfono (con código de país)</label>
+        <input type="text" name="telefono" value="{{ c['telefono'] if c else '' }}" required>
+      </div>
+      <div class="campo">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ c['email'] if c else '' }}">
+      </div>
+      <div class="campo">
+        <label>Ciudad</label>
+        <input type="text" name="ciudad" value="{{ c['ciudad'] if c else '' }}">
+      </div>
+      <div class="campo">
+        <label>Grupo</label>
+        <input type="text" name="grupo" value="{{ c['grupo'] if c else '' }}">
+      </div>
+      {% if c %}
+      <div class="campo">
+        <label>Estado</label>
+        <select name="estado">
+          <option value="nuevo" {% if c['estado'] == 'nuevo' %}selected{% endif %}>Nuevo</option>
+          <option value="formulario_completo" {% if c['estado'] == 'formulario_completo' %}selected{% endif %}>Formulario completo</option>
+          <option value="inactivo" {% if c['estado'] == 'inactivo' %}selected{% endif %}>Inactivo</option>
+        </select>
+      </div>
+      {% endif %}
+    </div>
+    <div class="campo">
+      <label>Notas</label>
+      <textarea name="notas" rows="3">{{ c['notas'] if c else '' }}</textarea>
+    </div>
+    <button class="btn" type="submit">Guardar</button>
+    <a class="btn sec" href="/contactos">Cancelar</a>
+  </form>
+</div>
+{% if c %}
+<div class="tarjeta">
+  <h2>Enviar bienvenida</h2>
+  <form class="acciones" method="post" action="/contactos/{{ c['id'] }}/bienvenida">
+    <select name="canal" style="width:auto;margin:0">
+      <option value="bot">Bot (whatsapp-web.js)</option>
+      <option value="cloud">Cloud API (Meta)</option>
+    </select>
+    <button class="btn" type="submit">Enviar ahora</button>
+  </form>
+  <p class="ayuda">La plantilla se define en Configuración. Con canal "bot" el mensaje queda en cola y lo envía el bot con retrasos aleatorios.</p>
+</div>
+<div class="tarjeta">
+  <h2>Zona de riesgo</h2>
+  <form method="post" action="/contactos/{{ c['id'] }}/eliminar" onsubmit="return confirm('¿Eliminar este contacto?')">
+    <button class="btn peligro" type="submit">Eliminar contacto</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

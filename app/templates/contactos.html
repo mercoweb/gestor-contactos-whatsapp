@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Contactos <span class="ayuda">({{ total }})</span></h1>
+<form class="busqueda" method="get" action="/contactos">
+  <input type="text" name="q" value="{{ q }}" placeholder="Buscar por nombre, teléfono, email o ciudad...">
+  <select name="estado">
+    <option value="">Todos los estados</option>
+    <option value="nuevo" {% if estado == 'nuevo' %}selected{% endif %}>Nuevo</option>
+    <option value="formulario_completo" {% if estado == 'formulario_completo' %}selected{% endif %}>Formulario completo</option>
+    <option value="inactivo" {% if estado == 'inactivo' %}selected{% endif %}>Inactivo</option>
+  </select>
+  <button class="btn" type="submit">Buscar</button>
+  <a class="btn sec" href="/contactos/nuevo">+ Nuevo</a>
+</form>
+<div class="tarjeta" style="padding:0; overflow-x:auto">
+  <table>
+    <tr>
+      <th>Nombre</th><th>Teléfono</th><th>Email</th><th>Ciudad</th><th>Estado</th><th>Bienvenida</th><th>Formulario</th><th></th>
+    </tr>
+    {% for c in filas %}
+    <tr>
+      <td><a href="/contactos/{{ c['id'] }}">{{ c['nombre'] or '(sin nombre)' }}</a></td>
+      <td>{{ c['telefono'] }}</td>
+      <td>{{ c['email'] }}</td>
+      <td>{{ c['ciudad'] }}</td>
+      <td><span class="etq {{ c['estado'] }}">{{ c['estado'].replace('_',' ') }}</span></td>
+      <td>{% if c['bienvenida_enviada'] %}✅{% else %}—{% endif %}</td>
+      <td>{% if c['form_completado'] %}✅{% else %}—{% endif %}</td>
+      <td>
+        <form class="acciones" method="post" action="/contactos/{{ c['id'] }}/bienvenida">
+          <input type="hidden" name="canal" value="bot">
+          <button class="btn sec" type="submit" title="Enviar bienvenida">👋</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    {% if not filas %}
+    <tr><td colspan="8" class="ayuda" style="padding:20px">Sin resultados. Importa tu CSV o agrega contactos.</td></tr>
+    {% endif %}
+  </table>
+</div>
+<div class="paginacion">
+  {% if page > 1 %}<a class="btn sec" href="/contactos?q={{ q }}&estado={{ estado }}&page={{ page - 1 }}">‹ Anterior</a>{% endif %}
+  <span>Página {{ page }} de {{ paginas }}</span>
+  {% if page < paginas %}<a class="btn sec" href="/contactos?q={{ q }}&estado={{ estado }}&page={{ page + 1 }}">Siguiente ›</a>{% endif %}
+</div>
+{% endblock %}

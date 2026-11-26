@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Panel general</h1>
+<div class="stats">
+  <div class="stat"><div class="numero">{{ total }}</div><div class="etiqueta">Contactos totales</div></div>
+  <div class="stat"><div class="numero">{{ con_form }}</div><div class="etiqueta">Formulario completo</div></div>
+  <div class="stat"><div class="numero">{{ sin_form }}</div><div class="etiqueta">Sin formulario</div></div>
+  <div class="stat"><div class="numero">{{ bienvenidas }}</div><div class="etiqueta">Bienvenidas enviadas</div></div>
+  <div class="stat"><div class="numero">{{ pendientes }}</div><div class="etiqueta">En cola del bot</div></div>
+</div>
+<div class="tarjeta" style="margin-top:20px">
+  <h2>Pasos rápidos</h2>
+  <ol class="ayuda" style="line-height:1.9">
+    <li><a href="/importar">Importa tu CSV</a> con los 800+ contactos del grupo (columnas: nombre, telefono, email, ciudad).</li>
+    <li>En <a href="/configuracion">Configuración</a> pega el enlace de tu Google Form y edita el mensaje de bienvenida.</li>
+    <li>Inicia el bot (<code>wa_bot</code>) para detectar nuevos miembros y enviar bienvenidas automáticamente.</li>
+    <li>Configura el Apps Script del formulario (ver <code>google_appscript/codigo.gs</code>) para que los datos lleguen solos.</li>
+  </ol>
+</div>
+{% endblock %}

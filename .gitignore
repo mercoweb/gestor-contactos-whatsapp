@@ -1,0 +1,10 @@
+run.py
+.env
+datos/
+wa_bot/.wwebjs_auth/
+wa_bot/.wwebjs_cache/
+wa_bot/session/
+node_modules/
+__pycache__/
+*.pyc
+*.db

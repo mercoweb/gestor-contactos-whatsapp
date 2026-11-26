@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar sesión{% endblock %}
+{% block contenido %}
+<div class="tarjeta login-caja">
+  <h1>Acceso al panel</h1>
+  {% if error %}<div class="msg-error">{{ error }}</div>{% endif %}
+  <form method="post" action="/login">
+    <div class="campo">
+      <label for="password">Contraseña de administrador</label>
+      <input type="password" id="password" name="password" required autofocus>
+    </div>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+</div>
+{% endblock %}

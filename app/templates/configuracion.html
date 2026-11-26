@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>Configuración</h1>
+<div class="tarjeta">
+  <form method="post" action="/configuracion">
+    <div class="campo">
+      <label>Mensaje de bienvenida (variables disponibles: {nombre}, {telefono}, {email}, {ciudad}, {link})</label>
+      <textarea name="welcome_template" rows="4">{{ val.welcome_template }}</textarea>
+    </div>
+    <div class="campo">
+      <label>Enlace del Google Form (se inserta donde va {link} en el mensaje)</label>
+      <input type="url" name="google_form_url" value="{{ val.google_form_url }}" placeholder="https://docs.google.com/forms/d/e/.../viewform">
+    </div>
+    <button class="btn" type="submit">Guardar</button>
+  </form>
+</div>
+<div class="tarjeta">
+  <h2>Integración con Google Forms</h2>
+  <ol class="ayuda" style="line-height:1.9">
+    <li>Crea un Google Form con los campos: nombre completo, email, ciudad. Agrega también una pregunta de "teléfono" (puede ser oculta o de texto).</li>
+    <li>En el formulario: <strong>Extensiones → Apps Script</strong>, pega el contenido de <code>google_appscript/codigo.gs</code> y reemplaza <code>URL_DE_TU_APP</code> y <code>TOKEN</code> por los tuyos.</li>
+    <li>Agrega un activador (disparador): función <code>alEnviarFormulario</code>, evento "Al enviarse el formulario".</li>
+    <li>Las respuestas llegarán automáticamente a esta aplicación por el webhook <code>/api/webhook/formulario</code>.</li>
+  </ol>
+  <h2>Bot de WhatsApp (detección de nuevos miembros)</h2>
+  <ol class="ayuda" style="line-height:1.9">
+    <li>Entra a la carpeta <code>wa_bot</code>, ejecuta <code>npm install</code> y luego <code>npm start</code>.</li>
+    <li>Escanea el código QR con WhatsApp Web (la sesión queda guardada).</li>
+    <li>El bot vigila el grupo configurado en <code>wa_bot/.env</code>; cuando entra alguien, registra el contacto y encola la bienvenida.</li>
+  </ol>
+</div>
+{% endblock %}
